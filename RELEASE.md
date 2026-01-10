@@ -66,7 +66,7 @@ ls -la out/dist/
 
 ```bash
 # Скачать пакет с GitHub Releases
-wget https://github.com/zapret/zapret-daemon/releases/download/v1.0.0/zapret-daemon_1.0.0_amd64.deb
+wget https://github.com/Sergeydigl3/zapret-nix/releases/download/v1.0.0/zapret-daemon_1.0.0_amd64.deb
 
 # Установить
 sudo dpkg -i zapret-daemon_1.0.0_amd64.deb
@@ -88,7 +88,7 @@ sudo service zapret-daemon status
 
 ```bash
 # Скачать пакет
-wget https://github.com/zapret/zapret-daemon/releases/download/v1.0.0/zapret-daemon-1.0.0-1.x86_64.rpm
+wget https://github.com/Sergeydigl3/zapret-nix/releases/download/v1.0.0/zapret-daemon-1.0.0-1.x86_64.rpm
 
 # Установить
 sudo rpm -ivh zapret-daemon-1.0.0-1.x86_64.rpm
@@ -105,7 +105,7 @@ sudo systemctl enable zapret-daemon
 
 ```bash
 # Скачать пакет
-wget https://github.com/zapret/zapret-daemon/releases/download/v1.0.0/zapret-daemon-1.0.0-r0.x86_64.apk
+wget https://github.com/Sergeydigl3/zapret-nix/releases/download/v1.0.0/zapret-daemon-1.0.0-r0.x86_64.apk
 
 # Установить
 sudo apk add --allow-untrusted zapret-daemon-1.0.0-r0.x86_64.apk
@@ -120,7 +120,7 @@ sudo rc-update add zapret-daemon default
 
 ```bash
 # Скачать пакет
-wget https://github.com/zapret/zapret-daemon/releases/download/v1.0.0/zapret-daemon-1.0.0-1-x86_64.pkg.tar.zst
+wget https://github.com/Sergeydigl3/zapret-nix/releases/download/v1.0.0/zapret-daemon-1.0.0-1-x86_64.pkg.tar.zst
 
 # Установить
 sudo pacman -U zapret-daemon-1.0.0-1-x86_64.pkg.tar.zst
@@ -135,7 +135,7 @@ sudo systemctl enable zapret-daemon
 
 ```bash
 # Скачать архив
-wget https://github.com/zapret/zapret-daemon/releases/download/v1.0.0/zapret-daemon_1.0.0_linux_x86_64.tar.gz
+wget https://github.com/Sergeydigl3/zapret-nix/releases/download/v1.0.0/zapret-daemon_1.0.0_linux_x86_64.tar.gz
 
 # Распаковать
 tar -xzf zapret-daemon_1.0.0_linux_x86_64.tar.gz

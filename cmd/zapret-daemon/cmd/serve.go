@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"github.com/zapret/zapret-daemon/internal/config"
-	"github.com/zapret/zapret-daemon/internal/daemonserver"
+	"github.com/Sergeydigl3/zapret-nix/internal/config"
+	"github.com/Sergeydigl3/zapret-nix/internal/daemonserver"
 )
 
 var serveCmd = &cobra.Command{

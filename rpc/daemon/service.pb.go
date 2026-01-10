@@ -134,7 +134,7 @@ const file_rpc_daemon_service_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12!\n" +
 	"\frestarted_at\x18\x02 \x01(\tR\vrestartedAt2J\n" +
 	"\fZapretDaemon\x12:\n" +
-	"\aRestart\x12\x16.daemon.RestartRequest\x1a\x17.daemon.RestartResponseB,Z*github.com/zapret/zapret-daemon/rpc/daemonb\x06proto3"
+	"\aRestart\x12\x16.daemon.RestartRequest\x1a\x17.daemon.RestartResponseB.Z,github.com/Sergeydigl3/zapret-nix/rpc/daemonb\x06proto3"
 
 var (
 	file_rpc_daemon_service_proto_rawDescOnce sync.Once
