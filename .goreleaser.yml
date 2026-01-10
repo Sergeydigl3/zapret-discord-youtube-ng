@@ -71,9 +71,9 @@ archives:
 
 nfpms:
   - id: packages
-    package_name: zapret-daemon
+    package_name: zapret-nix
     vendor: Zapret Project
-    homepage: https://github.com/Sergeydigl3/zapret-daemon
+    homepage: https://github.com/Sergeydigl3/zapret-nix
     maintainer: Sergeydigl3
     description: |
       Демон-сервис для управления zapret с интерфейсом командной строки.

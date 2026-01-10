@@ -1,4 +1,4 @@
-module github.com/zapret/zapret-daemon
+module github.com/Sergeydigl3/zapret-nix
 
 go 1.25.5
 

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package daemon;
 
-option go_package = "github.com/zapret/zapret-daemon/rpc/daemon";
+option go_package = "github.com/Sergeydigl3/zapret-nix/rpc/daemon";
 
 // ZapretDaemon service provides control operations for the zapret daemon.
 service ZapretDaemon {
