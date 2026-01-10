@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/twitchtv/twirp"
-	"github.com/zapret/zapret-daemon/rpc/daemon"
+	"github.com/Sergeydigl3/zapret-nix/rpc/daemon"
 )
 
 var (

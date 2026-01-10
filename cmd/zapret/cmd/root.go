@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/spf13/cobra"
-	"github.com/zapret/zapret-daemon/internal/config"
-	"github.com/zapret/zapret-daemon/rpc/daemon"
+	"github.com/Sergeydigl3/zapret-nix/internal/config"
+	"github.com/Sergeydigl3/zapret-nix/rpc/daemon"
 )
 
 var (
