@@ -2,7 +2,6 @@ package firewall
 
 import (
 	"context"
-	"fmt"
 )
 
 // Firewall is the interface for firewall implementations.
@@ -51,16 +50,4 @@ type Config struct {
 
 	// Interface is the network interface
 	Interface string
-}
-
-// NewFirewall creates a new firewall instance based on the backend.
-func NewFirewall(cfg *Config) (Firewall, error) {
-	switch cfg.Backend {
-	case "nftables":
-		return NewNftablesFirewall(cfg)
-	case "iptables":
-		return NewIptablesFirewall(cfg)
-	default:
-		return nil, fmt.Errorf("unknown firewall backend: %s", cfg.Backend)
-	}
 }
