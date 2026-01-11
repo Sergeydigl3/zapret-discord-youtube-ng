@@ -55,22 +55,6 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: linux-armv6
-    main: ./cmd/zapret-daemon
-    binary: zapret-daemon
-    env:
-      - CGO_ENABLED=0
-    goos:
-      - linux
-    goarch:
-      - arm
-    goarm:
-      - "6"
-    ldflags:
-      - -s -w
-      - -X main.version={{.Version}}
-      - -X main.commit={{.Commit}}
-      - -X main.date={{.Date}}
 
   - id: linux-386
     main: ./cmd/zapret-daemon
@@ -134,7 +118,7 @@ builds:
 
   - id: windows-386
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon.exe
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -224,18 +208,6 @@ archives:
       - goos: windows
         formats:
           - zip
-      - goos: linux
-        formats:
-          - tar.gz
-      - goos: darwin
-        formats:
-          - tar.gz
-      - goos: freebsd
-        formats:
-          - tar.gz
-      - goos: android
-        formats:
-          - tar.gz
     files:
       - README.md
       - LICENSE*
