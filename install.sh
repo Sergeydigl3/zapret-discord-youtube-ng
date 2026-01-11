@@ -58,10 +58,11 @@ download_file() {
   local downloader=$3
 
   if [ "$downloader" = "curl" ]; then
-    curl -fL "$url" -o "$output"
+    curl -fL "$url" -o "$output" || return 1
   else
-    wget -q "$url" -O "$output"
+    wget -q "$url" -O "$output" || return 1
   fi
+  return 0
 }
 
 # Detect system architecture
@@ -169,10 +170,17 @@ download_package() {
 
   url="https://github.com/$REPO/releases/download/v${version}/$filename"
 
-  info "Downloading zapret-ng v$version ($pm package)..."
+  info "Downloading zapret-ng v$version ($pm package)..." >&2
+  info "URL: $url" >&2
+  info "Saving to: $TEMP_DIR/$filename" >&2
 
   if ! download_file "$url" "$TEMP_DIR/$filename" "$downloader"; then
     error "Failed to download package from $url"
+    exit 1
+  fi
+
+  if [ ! -f "$TEMP_DIR/$filename" ]; then
+    error "Downloaded file not found: $TEMP_DIR/$filename"
     exit 1
   fi
 
@@ -183,6 +191,11 @@ download_package() {
 install_package() {
   local package=$1
   local pm=$2
+
+  if [ ! -f "$package" ]; then
+    error "Package file not found: $package"
+    exit 1
+  fi
 
   info "Installing package..."
 
