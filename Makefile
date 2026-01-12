@@ -27,9 +27,9 @@ daemon:
 
 # Build CLI
 cli:
-	@echo "Building zapret CLI..."
+	@echo "Building zapret-ng CLI..."
 	@mkdir -p out/bin
-	go build -o out/bin/zapret ./cmd/zapret
+	go build -o out/bin/zapret-ng ./cmd/zapret
 
 # Build both
 build: proto daemon cli

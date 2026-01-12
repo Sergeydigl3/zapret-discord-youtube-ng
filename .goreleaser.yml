@@ -11,7 +11,7 @@ builds:
   # Daemon builds
   - id: daemon-linux-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -27,7 +27,7 @@ builds:
   # CLI builds
   - id: cli-linux-amd64
     main: ./cmd/zapret
-    binary: zapret-ng-ng
+    binary: zapret-ng
     env:
       - CGO_ENABLED=0
     goos:
@@ -42,7 +42,7 @@ builds:
 
   - id: daemon-linux-arm64
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -72,7 +72,7 @@ builds:
 
   - id: daemon-linux-armv7
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -107,7 +107,7 @@ builds:
 
   - id: daemon-linux-386
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -137,7 +137,7 @@ builds:
 
   - id: daemon-macos-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -167,7 +167,7 @@ builds:
 
   - id: daemon-macos-arm64
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -197,7 +197,7 @@ builds:
 
   - id: daemon-windows-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -227,7 +227,7 @@ builds:
 
   - id: daemon-windows-386
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -257,7 +257,7 @@ builds:
 
   - id: daemon-freebsd-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -287,7 +287,7 @@ builds:
 
   - id: daemon-freebsd-arm64
     main: ./cmd/zapret-daemon
-    binary: zapret-ng-daemon
+    binary: zapret-daemon
     env:
       - CGO_ENABLED=0
     goos:

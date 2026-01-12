@@ -85,7 +85,7 @@ sudo sh install.sh --uninstall
 - Пакет через системный пакетный менеджер
 - Конфигурационные файлы (/etc/zapret-ng)
 - Runtime файлы (/run/zapret)
-- Символические ссылки (/usr/local/bin/zapret)
+- Бинарники (/usr/bin/zapret-daemon, /usr/bin/zapret-ng)
 
 ### Установка на других платформах
 
@@ -123,7 +123,7 @@ make cli      # Сборка CLI
 
 Бинарники будут созданы в директории `out/bin/`:
 - `out/bin/zapret-daemon` - демон-сервис
-- `out/bin/zapret` - CLI клиент
+- `out/bin/zapret-ng` - CLI клиент
 
 ## Конфигурация
 
@@ -177,16 +177,16 @@ ZAPRET_LOG_FORMAT=json
 
 ```bash
 # Перезапустить демон
-./out/bin/zapret restart
+./out/bin/zapret-ng restart
 
 # Принудительный перезапуск
-./out/bin/zapret restart --force
+./out/bin/zapret-ng restart --force
 
 # С указанием конкретного сокета
-./out/bin/zapret restart --socket /run/zapret/zapret-daemon.sock
+./out/bin/zapret-ng restart --socket /run/zapret/zapret-daemon.sock
 
 # С указанием сетевого адреса
-./out/bin/zapret restart --address localhost:8080
+./out/bin/zapret-ng restart --address localhost:8080
 ```
 
 ## Архитектура
