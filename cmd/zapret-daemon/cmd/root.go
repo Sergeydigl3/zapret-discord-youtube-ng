@@ -14,6 +14,7 @@ var rootCmd = &cobra.Command{
 	Short: "Zapret daemon service",
 	Long: `Zapret daemon is a background service that manages zapret operations.
 It provides a control interface via Unix socket or network connection.`,
+	SilenceUsage: true,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
