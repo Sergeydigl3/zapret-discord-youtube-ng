@@ -66,6 +66,27 @@ sudo sh install.sh
 - Установит пакет через системный пакетный менеджер
 - Настроит сервис и конфигурацию
 
+### Удаление
+
+Для удаления используйте тот же скрипт с флагом `--uninstall`:
+
+```bash
+# С curl
+curl -fsSL https://raw.githubusercontent.com/Sergeydigl3/zapret-discord-youtube-ng/refs/heads/master/install.sh | sudo sh -s -- --uninstall
+
+# С wget
+wget -qO- https://raw.githubusercontent.com/Sergeydigl3/zapret-discord-youtube-ng/refs/heads/master/install.sh | sudo sh -s -- --uninstall
+
+# Или локально
+sudo sh install.sh --uninstall
+```
+
+Скрипт удалит:
+- Пакет через системный пакетный менеджер
+- Конфигурационные файлы (/etc/zapret)
+- Runtime файлы (/run/zapret)
+- Символические ссылки (/usr/local/bin/zapret)
+
 ### Установка на других платформах
 
 Для macOS, Windows, FreeBSD и Android скачайте архив напрямую с [GitHub Releases](https://github.com/Sergeydigl3/zapret-discord-youtube-ng/releases).

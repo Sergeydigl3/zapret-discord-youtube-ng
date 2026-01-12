@@ -11,6 +11,7 @@ NC='\033[0m' # No Color
 # Configuration
 REPO="Sergeydigl3/zapret-discord-youtube-ng"
 TEMP_DIR=$(mktemp -d)
+UNINSTALL_MODE=false
 
 # Cleanup on exit
 cleanup() {
@@ -261,6 +262,76 @@ verify_installation() {
   fi
 }
 
+# Uninstall package
+uninstall_package() {
+  local pm=$1
+
+  info "Uninstalling zapret-discord-youtube-ng..."
+
+  case "$pm" in
+    deb)
+      if dpkg -l | grep -q zapret-discord-youtube-ng; then
+        apt-get remove -y zapret-discord-youtube-ng
+        apt-get purge -y zapret-discord-youtube-ng
+        apt-get autoremove -y
+        info "Package removed successfully"
+      else
+        warn "Package is not installed"
+      fi
+      ;;
+    rpm)
+      if rpm -q zapret-discord-youtube-ng > /dev/null 2>&1; then
+        rpm -e zapret-discord-youtube-ng 2>/dev/null || dnf remove -y zapret-discord-youtube-ng 2>/dev/null || yum remove -y zapret-discord-youtube-ng
+        info "Package removed successfully"
+      else
+        warn "Package is not installed"
+      fi
+      ;;
+    apk)
+      if apk info | grep -q zapret-discord-youtube-ng; then
+        apk del zapret-discord-youtube-ng
+        info "Package removed successfully"
+      else
+        warn "Package is not installed"
+      fi
+      ;;
+    archlinux)
+      if pacman -Q zapret-discord-youtube-ng > /dev/null 2>&1; then
+        pacman -R --noconfirm zapret-discord-youtube-ng
+        info "Package removed successfully"
+      else
+        warn "Package is not installed"
+      fi
+      ;;
+  esac
+
+  # Clean up any remaining files
+  info "Cleaning up remaining files..."
+  rm -rf /etc/zapret
+  rm -rf /run/zapret
+  rm -f /usr/local/bin/zapret
+
+  info "Uninstallation complete!"
+}
+
+# Uninstall main
+uninstall_main() {
+  echo "=========================================="
+  echo "  zapret-discord-youtube-ng Uninstaller"
+  echo "=========================================="
+  echo ""
+
+  check_linux
+  check_permissions
+
+  local pm
+  pm=$(detect_package_manager)
+
+  info "Detected package manager: $pm"
+
+  uninstall_package "$pm"
+}
+
 # Main installation
 main() {
   echo "=========================================="
@@ -295,4 +366,43 @@ main() {
   echo "Run 'zapret --help' to get started"
 }
 
-main
+# Parse arguments
+parse_args() {
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --uninstall)
+        UNINSTALL_MODE=true
+        shift
+        ;;
+      --help|-h)
+        echo "Usage: $0 [OPTIONS]"
+        echo ""
+        echo "Options:"
+        echo "  --uninstall    Uninstall zapret-discord-youtube-ng"
+        echo "  --help, -h     Show this help message"
+        echo ""
+        echo "Examples:"
+        echo "  # Install"
+        echo "  sudo $0"
+        echo ""
+        echo "  # Uninstall"
+        echo "  sudo $0 --uninstall"
+        exit 0
+        ;;
+      *)
+        error "Unknown option: $1"
+        echo "Use --help for usage information"
+        exit 1
+        ;;
+    esac
+  done
+}
+
+# Entry point
+parse_args "$@"
+
+if [ "$UNINSTALL_MODE" = true ]; then
+  uninstall_main
+else
+  main
+fi
