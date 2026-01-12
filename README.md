@@ -38,12 +38,12 @@
 
 **С использованием `curl`:**
 ```bash
-sudo sh <(curl -fsSL https://raw.githubusercontent.com/Sergeydigl3/zapret-discord-youtube-ng/refs/heads/master/install.sh)
+curl -fsSL https://raw.githubusercontent.com/Sergeydigl3/zapret-discord-youtube-ng/refs/heads/master/install.sh | sudo sh
 ```
 
 **С использованием `wget`:**
 ```bash
-sudo sh <(wget -qO - https://raw.githubusercontent.com/Sergeydigl3/zapret-discord-youtube-ng/refs/heads/master/install.sh)
+wget -qO- https://raw.githubusercontent.com/Sergeydigl3/zapret-discord-youtube-ng/refs/heads/master/install.sh | sudo sh
 ```
 
 Или скачайте и запустите скрипт вручную:

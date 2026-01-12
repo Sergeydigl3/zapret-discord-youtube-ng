@@ -148,19 +148,49 @@ download_package() {
   local arch=$3
   local downloader=$4
   local filename url
+  local pkg_arch="$arch"
 
+  # Map architecture names for each package format
   case "$pm" in
     deb)
-      filename="zapret-discord-youtube-ng_${version}_${arch}.deb"
+      # DEB uses: amd64, arm64, armhf, i386
+      case "$arch" in
+        x86_64) pkg_arch="amd64" ;;
+        aarch64) pkg_arch="arm64" ;;
+        armv7) pkg_arch="armhf" ;;
+        i386) pkg_arch="i386" ;;
+      esac
+      filename="zapret-discord-youtube-ng_${version}_${pkg_arch}.deb"
       ;;
     rpm)
-      filename="zapret-discord-youtube-ng-${version}-1.${arch}.rpm"
+      # RPM uses: x86_64, aarch64, armhfp, i386
+      case "$arch" in
+        x86_64) pkg_arch="x86_64" ;;
+        aarch64) pkg_arch="aarch64" ;;
+        armv7) pkg_arch="armhfp" ;;
+        i386) pkg_arch="i386" ;;
+      esac
+      filename="zapret-discord-youtube-ng-${version}-1.${pkg_arch}.rpm"
       ;;
     apk)
-      filename="zapret-discord-youtube-ng-${version}-r0.${arch}.apk"
+      # APK uses: x86_64, aarch64, armhf, x86
+      case "$arch" in
+        x86_64) pkg_arch="x86_64" ;;
+        aarch64) pkg_arch="aarch64" ;;
+        armv7) pkg_arch="armhf" ;;
+        i386) pkg_arch="x86" ;;
+      esac
+      filename="zapret-discord-youtube-ng-${version}-r0.${pkg_arch}.apk"
       ;;
     archlinux)
-      filename="zapret-discord-youtube-ng-${version}-1-${arch}.pkg.tar.zst"
+      # Arch uses: x86_64, aarch64, armv7h
+      case "$arch" in
+        x86_64) pkg_arch="x86_64" ;;
+        aarch64) pkg_arch="aarch64" ;;
+        armv7) pkg_arch="armv7h" ;;
+        i386) pkg_arch="i686" ;;
+      esac
+      filename="zapret-discord-youtube-ng-${version}-1-${pkg_arch}.pkg.tar.zst"
       ;;
     *)
       error "Unsupported package manager: $pm"
