@@ -251,9 +251,9 @@ install_package() {
 verify_installation() {
   info "Verifying installation..."
 
-  if command -v zapret > /dev/null 2>&1; then
+  if command -v zapret-ng > /dev/null 2>&1; then
     local version
-    version=$(zapret --version 2>/dev/null || echo "unknown")
+    version=$(zapret-ng --version 2>/dev/null || echo "unknown")
     info "Installation successful! Version: $version"
     return 0
   else
@@ -309,7 +309,8 @@ uninstall_package() {
   info "Cleaning up remaining files..."
   rm -rf /etc/zapret
   rm -rf /run/zapret
-  rm -f /usr/local/bin/zapret
+  rm -f /usr/local/bin/zapret-ng
+  rm -f /usr/bin/zapret-ng
 
   info "Uninstallation complete!"
 }
@@ -363,7 +364,7 @@ main() {
 
   echo ""
   info "zapret-discord-youtube-ng installed successfully!"
-  echo "Run 'zapret --help' to get started"
+  echo "Run 'zapret-ng --help' to get started"
 }
 
 # Parse arguments

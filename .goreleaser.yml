@@ -8,9 +8,10 @@ before:
     - make proto
 
 builds:
-  - id: linux-amd64
+  # Daemon builds
+  - id: daemon-linux-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -23,9 +24,25 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: linux-arm64
+  # CLI builds
+  - id: cli-linux-amd64
+    main: ./cmd/zapret
+    binary: zapret-ng-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-linux-arm64
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -38,9 +55,41 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: linux-armv7
+  - id: cli-linux-arm64
+    main: ./cmd/zapret
+    binary: zapret-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-linux-armv7
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - arm
+    goarm:
+      - "7"
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: cli-linux-armv7
+    main: ./cmd/zapret
+    binary: zapret-ng
     env:
       - CGO_ENABLED=0
     goos:
@@ -56,9 +105,9 @@ builds:
       - -X main.date={{.Date}}
 
 
-  - id: linux-386
+  - id: daemon-linux-386
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -71,9 +120,24 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: macos-amd64
+  - id: cli-linux-386
+    main: ./cmd/zapret
+    binary: zapret-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - 386
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-macos-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -86,9 +150,24 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: macos-arm64
+  - id: cli-macos-amd64
+    main: ./cmd/zapret
+    binary: zapret-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-macos-arm64
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -101,9 +180,24 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: windows-amd64
+  - id: cli-macos-arm64
+    main: ./cmd/zapret
+    binary: zapret-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-windows-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -116,9 +210,24 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: windows-386
+  - id: cli-windows-amd64
+    main: ./cmd/zapret
+    binary: zapret-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    goarch:
+      - amd64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-windows-386
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -131,9 +240,24 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: freebsd-amd64
+  - id: cli-windows-386
+    main: ./cmd/zapret
+    binary: zapret-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    goarch:
+      - 386
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-freebsd-amd64
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
     env:
       - CGO_ENABLED=0
     goos:
@@ -146,9 +270,39 @@ builds:
       - -X main.commit={{.Commit}}
       - -X main.date={{.Date}}
 
-  - id: freebsd-arm64
+  - id: cli-freebsd-amd64
+    main: ./cmd/zapret
+    binary: zapret-ng
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - freebsd
+    goarch:
+      - amd64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: daemon-freebsd-arm64
     main: ./cmd/zapret-daemon
-    binary: zapret-daemon
+    binary: zapret-ng-daemon
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - freebsd
+    goarch:
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+  - id: cli-freebsd-arm64
+    main: ./cmd/zapret
+    binary: zapret-ng
     env:
       - CGO_ENABLED=0
     goos:
@@ -232,6 +386,17 @@ nfpms:
       - rpm
       - apk
       - archlinux
+
+    # Include both daemon and CLI builds for Linux only
+    builds:
+      - daemon-linux-amd64
+      - daemon-linux-arm64
+      - daemon-linux-armv7
+      - daemon-linux-386
+      - cli-linux-amd64
+      - cli-linux-arm64
+      - cli-linux-armv7
+      - cli-linux-386
 
     dependencies:
       - iptables
