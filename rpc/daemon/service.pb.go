@@ -173,8 +173,10 @@ type StatusResponse struct {
 	ActiveProcesses int32 `protobuf:"varint,4,opt,name=active_processes,json=activeProcesses,proto3" json:"active_processes,omitempty"`
 	// firewall_backend is the firewall backend being used (nftables or iptables).
 	FirewallBackend string `protobuf:"bytes,5,opt,name=firewall_backend,json=firewallBackend,proto3" json:"firewall_backend,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// start_time is the timestamp when the strategy runner was started (RFC3339 format).
+	StartTime     string `protobuf:"bytes,6,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *StatusResponse) Reset() {
@@ -242,6 +244,13 @@ func (x *StatusResponse) GetFirewallBackend() string {
 	return ""
 }
 
+func (x *StatusResponse) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
 var File_rpc_daemon_service_proto protoreflect.FileDescriptor
 
 const file_rpc_daemon_service_proto_rawDesc = "" +
@@ -252,13 +261,15 @@ const file_rpc_daemon_service_proto_rawDesc = "" +
 	"\x0fRestartResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12!\n" +
 	"\frestarted_at\x18\x02 \x01(\tR\vrestartedAt\"\x0f\n" +
-	"\rStatusRequest\"\xca\x01\n" +
+	"\rStatusRequest\"\xe9\x01\n" +
 	"\x0eStatusResponse\x12\x18\n" +
 	"\arunning\x18\x01 \x01(\bR\arunning\x12#\n" +
 	"\rstrategy_file\x18\x02 \x01(\tR\fstrategyFile\x12#\n" +
 	"\ractive_queues\x18\x03 \x01(\x05R\factiveQueues\x12)\n" +
 	"\x10active_processes\x18\x04 \x01(\x05R\x0factiveProcesses\x12)\n" +
-	"\x10firewall_backend\x18\x05 \x01(\tR\x0ffirewallBackend2\x86\x01\n" +
+	"\x10firewall_backend\x18\x05 \x01(\tR\x0ffirewallBackend\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x06 \x01(\tR\tstartTime2\x86\x01\n" +
 	"\fZapretDaemon\x12:\n" +
 	"\aRestart\x12\x16.daemon.RestartRequest\x1a\x17.daemon.RestartResponse\x12:\n" +
 	"\tGetStatus\x12\x15.daemon.StatusRequest\x1a\x16.daemon.StatusResponseB=Z;github.com/Sergeydigl3/zapret-discord-youtube-ng/rpc/daemonb\x06proto3"

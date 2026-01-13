@@ -49,4 +49,7 @@ message StatusResponse {
 
   // firewall_backend is the firewall backend being used (nftables or iptables).
   string firewall_backend = 5;
+
+  // start_time is the timestamp when the strategy runner was started (RFC3339 format).
+  string start_time = 6;
 }

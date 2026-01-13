@@ -86,12 +86,18 @@ func (s *Server) GetStatus(ctx context.Context, req *daemon.StatusRequest) (*dae
 
 	status := s.strategyRunner.GetStatus()
 
+	var startTimeStr string
+	if !status.StartTime.IsZero() {
+		startTimeStr = status.StartTime.Format(time.RFC3339)
+	}
+
 	return &daemon.StatusResponse{
 		Running:         status.Running,
 		StrategyFile:    status.StrategyFile,
 		ActiveQueues:    int32(status.ActiveQueues),
 		ActiveProcesses: int32(status.ActiveProcesses),
 		FirewallBackend: status.FirewallBackend,
+		StartTime:       startTimeStr,
 	}, nil
 }
 

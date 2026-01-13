@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"sync"
+	"time"
 
 	"github.com/Sergeydigl3/zapret-discord-youtube-ng/internal/config"
 	"github.com/Sergeydigl3/zapret-discord-youtube-ng/internal/strategyrunner/firewall"
@@ -23,6 +24,7 @@ type Runner struct {
 	mu             sync.RWMutex
 	running        bool
 	lastParsedLen  int
+	startTime      time.Time
 }
 
 // Status represents the runner status.
@@ -32,6 +34,7 @@ type Status struct {
 	ActiveQueues    int
 	ActiveProcesses int
 	FirewallBackend string
+	StartTime       time.Time
 }
 
 // NewRunner creates a new strategy runner.
@@ -193,9 +196,11 @@ func (r *Runner) Start(ctx context.Context) error {
 	}
 
 	r.running = true
+	r.startTime = time.Now()
 	r.logger.Info("strategy runner started successfully",
 		slog.Int("rules", len(strategy.Rules)),
 		slog.Int("processes", r.procManager.Count()),
+		slog.Time("started_at", r.startTime),
 	)
 
 	return nil
@@ -310,6 +315,7 @@ func (r *Runner) GetStatus() *Status {
 		ActiveQueues:    r.lastParsedLen,
 		ActiveProcesses: r.procManager.Count(),
 		FirewallBackend: r.config.Firewall.Backend,
+		StartTime:       r.startTime,
 	}
 }
 
