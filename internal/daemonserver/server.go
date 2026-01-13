@@ -105,18 +105,34 @@ func (s *Server) GetRestartCount() int {
 	return s.restartCount
 }
 
+// Shutdown performs graceful shutdown and cleanup of resources.
+func (s *Server) Shutdown(ctx context.Context) error {
+	s.logger.Info("shutting down daemon server")
+
+	if s.strategyRunner != nil {
+		if err := s.strategyRunner.Stop(ctx); err != nil {
+			s.logger.Error("failed to stop strategy runner during shutdown", slog.Any("error", err))
+			return err
+		}
+	}
+
+	s.logger.Info("daemon server shutdown complete")
+	return nil
+}
+
 // NewTwirpServer creates a new Twirp HTTP handler for the daemon service.
-func NewTwirpServer(logger *slog.Logger, cfg *config.Config) (daemon.TwirpServer, error) {
+// It returns both the Twirp server and the underlying Server instance for cleanup.
+func NewTwirpServer(logger *slog.Logger, cfg *config.Config) (daemon.TwirpServer, *Server, error) {
 	server, err := NewServer(logger, cfg)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	// Start strategy runner if enabled
 	if server.strategyRunner != nil {
 		if err := server.strategyRunner.Start(context.Background()); err != nil {
 			logger.Error("failed to start strategy runner", slog.Any("error", err))
-			return nil, err
+			return nil, nil, err
 		}
 	}
 
@@ -146,7 +162,7 @@ func NewTwirpServer(logger *slog.Logger, cfg *config.Config) (daemon.TwirpServer
 		},
 	}
 
-	return daemon.NewZapretDaemonServer(server, twirp.WithServerHooks(hooks)), nil
+	return daemon.NewZapretDaemonServer(server, twirp.WithServerHooks(hooks)), server, nil
 }
 
 // InitLogger initializes a structured logger with the specified level and format.

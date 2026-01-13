@@ -47,7 +47,7 @@ func runServe(cmd *cobra.Command, args []string) error {
 	)
 
 	// Create Twirp server with config
-	twirpServer, err := daemonserver.NewTwirpServer(logger, cfg)
+	twirpServer, daemonSrv, err := daemonserver.NewTwirpServer(logger, cfg)
 	if err != nil {
 		return fmt.Errorf("failed to create twirp server: %w", err)
 	}
@@ -120,6 +120,13 @@ func runServe(cmd *cobra.Command, args []string) error {
 
 	select {
 	case err := <-errChan:
+		// Server error occurred - cleanup before returning
+		logger.Error("server error occurred, cleaning up", slog.String("error", err.Error()))
+		cleanupCtx, cleanupCancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cleanupCancel()
+		if cleanupErr := daemonSrv.Shutdown(cleanupCtx); cleanupErr != nil {
+			logger.Error("cleanup error", slog.String("error", cleanupErr.Error()))
+		}
 		return err
 	case sig := <-sigChan:
 		logger.Info("received shutdown signal", slog.String("signal", sig.String()))
@@ -130,8 +137,16 @@ func runServe(cmd *cobra.Command, args []string) error {
 	defer cancel()
 
 	logger.Info("shutting down gracefully...")
+
+	// First, shutdown the daemon server to cleanup resources (firewall rules, processes)
+	if err := daemonSrv.Shutdown(shutdownCtx); err != nil {
+		logger.Error("daemon shutdown error", slog.String("error", err.Error()))
+		// Continue with HTTP server shutdown even if daemon shutdown fails
+	}
+
+	// Then shutdown HTTP server
 	if err := httpServer.Shutdown(shutdownCtx); err != nil {
-		logger.Error("shutdown error", slog.String("error", err.Error()))
+		logger.Error("http server shutdown error", slog.String("error", err.Error()))
 		return err
 	}
 

@@ -101,6 +101,23 @@ func (r *Runner) Start(ctx context.Context) error {
 		slog.String("firewall", r.config.Firewall.Backend),
 	)
 
+	// Track if we need to cleanup on error
+	var firewallSetup bool
+	defer func() {
+		// If we had an error and firewall was setup, clean it up
+		if !r.running && firewallSetup {
+			r.logger.Info("startup failed, cleaning up firewall rules")
+			cleanupCtx := context.Background()
+			if err := r.fw.RemoveAll(cleanupCtx); err != nil {
+				r.logger.Error("failed to cleanup firewall rules", slog.Any("error", err))
+			}
+			// Also stop any processes that might have started
+			if err := r.procManager.StopAll(); err != nil {
+				r.logger.Error("failed to stop processes during cleanup", slog.Any("error", err))
+			}
+		}
+	}()
+
 	// 1. Parse strategy file
 	r.logger.Info("parsing strategy file", slog.String("path", r.config.StrategyFile))
 	strategy, err := r.parser.Parse(r.config.StrategyFile)
@@ -120,6 +137,7 @@ func (r *Runner) Start(ctx context.Context) error {
 	if err := r.fw.Setup(ctx); err != nil {
 		return fmt.Errorf("firewall setup failed: %w", err)
 	}
+	firewallSetup = true
 
 	// 3. Add firewall rules
 	for _, rule := range strategy.Rules {

@@ -192,7 +192,7 @@ func (n *NftablesFirewall) RemoveAll(ctx context.Context) error {
 	return nil
 }
 
-// Close closes the nftables firewall.
+// Close closes the nftables firewall and removes all rules.
 func (n *NftablesFirewall) Close() error {
-	return nil
+	return n.RemoveAll(context.Background())
 }
