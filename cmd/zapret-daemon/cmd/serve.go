@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 
@@ -64,6 +65,12 @@ func runServe(cmd *cobra.Command, args []string) error {
 
 	// Unix socket listener
 	if cfg.Server.SocketPath != "" {
+		// Create parent directory for socket if it doesn't exist
+		socketDir := filepath.Dir(cfg.Server.SocketPath)
+		if err := os.MkdirAll(socketDir, 0755); err != nil {
+			return fmt.Errorf("failed to create socket directory: %w", err)
+		}
+
 		// Remove existing socket file if it exists
 		if err := os.RemoveAll(cfg.Server.SocketPath); err != nil {
 			return fmt.Errorf("failed to remove existing socket: %w", err)
