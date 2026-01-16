@@ -1,22 +1,21 @@
-.PHONY: proto build clean install-tools daemon cli
+.PHONY: proto build clean daemon cli
 
 # protoc version requirement: 3.x or higher
 # Install protoc from: https://github.com/protocolbuffers/protobuf/releases
 
-# Install required protoc plugins
-install-tools:
-	@echo "Installing protoc plugins..."
-	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-	go install github.com/twitchtv/twirp/protoc-gen-twirp@latest
+# Go tools are managed via go.mod tool directive
+# Versions are pinned in go.mod and go.sum
 
 # Generate protobuf and twirp code
 proto:
 	@echo "Generating protobuf and twirp code..."
-	@PATH="$$HOME/bin:$$HOME/go/bin:$$PATH" protoc --proto_path=. \
+	@protoc --proto_path=. \
 		--go_out=. \
 		--go_opt=paths=source_relative \
 		--twirp_out=. \
 		--twirp_opt=paths=source_relative \
+		--plugin=protoc-gen-go="$$(go tool -n protoc-gen-go)" \
+		--plugin=protoc-gen-twirp="$$(go tool -n protoc-gen-twirp)" \
 		./rpc/daemon/service.proto
 
 # Build daemon

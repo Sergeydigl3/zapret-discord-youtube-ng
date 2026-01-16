@@ -1,6 +1,13 @@
 module github.com/Sergeydigl3/zapret-discord-youtube-ng
 
-go 1.25.5
+go 1.25
+
+toolchain go1.25.5
+
+tool (
+	github.com/twitchtv/twirp/protoc-gen-twirp
+	google.golang.org/protobuf/cmd/protoc-gen-go
+)
 
 require (
 	github.com/coreos/go-iptables v0.8.0
@@ -17,6 +24,7 @@ require (
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/pflag v1.0.9 // indirect
+	github.com/stretchr/testify v1.11.1 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
